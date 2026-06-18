@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-Inventory miInventario = new Inventory();
+GestorInventario miAlmacen = new GestorInventario();
 
 while (true)
 {
@@ -29,67 +29,67 @@ while (true)
         Console.Write("Precio (usa coma para decimales si es necesario): ");
         decimal precio = decimal.Parse(Console.ReadLine());
 
-        Item nuevoProducto = new Item(id, nombre, cantidad, precio);
-        miInventario.AddItem(nuevoProducto);
+        Producto nuevoProducto = new Producto(id, nombre, cantidad, precio);
+        miAlmacen.AgregarProducto(nuevoProducto);
         
         Console.WriteLine("\n¡Producto agregado correctamente al inventario!");
     }
 }
 
-public class Item
+public class Producto
 {
-    public int ItemId { get; set; }
-    public string Name { get; set; }
-    public int Quantity { get; set; }
-    public decimal Price { get; set; }
+    public int IdProducto { get; set; }
+    public string Nombre { get; set; }
+    public int Cantidad { get; set; }
+    public decimal Precio { get; set; }
 
-    public Item(int itemId, string name, int quantity, decimal price)
+    public Producto(int idProducto, string nombre, int cantidad, decimal precio)
     {
-        ItemId = itemId;
-        Name = name;
-        Quantity = quantity;
-        Price = price;
+        IdProducto = idProducto;
+        Nombre = nombre;
+        Cantidad = cantidad;
+        Precio = precio;
     }
 }
 
-public class Inventory
+public class GestorInventario
 {
-    private Dictionary<int, Item> items;
+    private Dictionary<int, Producto> productos;
 
-    public Inventory()
+    public GestorInventario()
     {
-        items = new Dictionary<int, Item>();
+        productos = new Dictionary<int, Producto>();
     }
 
-    public void AddItem(Item item)
+    public void AgregarProducto(Producto producto)
     {
-        if (!items.ContainsKey(item.ItemId))
+        if (!productos.ContainsKey(producto.IdProducto))
         {
-            items.Add(item.ItemId, item);
+            productos.Add(producto.IdProducto, producto);
         }
     }
 
-    public void RemoveItem(int itemId)
+    public void EliminarProducto(int idProducto)
     {
-        if (items.ContainsKey(itemId))
+        if (productos.ContainsKey(idProducto))
         {
-            items.Remove(itemId);
+            productos.Remove(idProducto);
         }
     }
 
-    public void UpdateQuantity(int itemId, int newQuantity)
+    public void ActualizarCantidad(int idProducto, int nuevaCantidad)
     {
-        if (items.ContainsKey(itemId))
+        if (productos.ContainsKey(idProducto))
         {
-            items[itemId].Quantity = newQuantity;
+            productos[idProducto].Cantidad = nuevaCantidad;
         }
     }
 
-    public Item GetItem(int itemId)
+    public Producto ObtenerProducto(int idProducto)
     {
-        if (items.ContainsKey(itemId))
+        if (productos.ContainsKey(idProducto))
         {
-            return items[itemId];
+            return productos[idProducto];
         }
         return null;
     }
